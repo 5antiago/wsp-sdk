@@ -1,0 +1,17 @@
+{
+    "name": "5antiago/whatsapp-sdk",
+    "description": "Integration with whatsapp cloud api",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "Santiago\\WhatsappSdk\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Santiago Graziano",
+            "email": "santiagograziano534@gmail.com"
+        }
+    ],
+    "require": {}
+}
