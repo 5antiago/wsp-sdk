@@ -5,7 +5,7 @@ namespace Santiago\WhatsappSdk\Messages\Outcoming;
 use Santiago\WhatsappSdk\Interactions\BaseInteraction;
 use Santiago\WhatsappSdk\Interfaces\Jsonable;
 
-class CTAMessage implements Jsonable
+class InteractiveMessage implements Jsonable
 {
     public function __construct(
         private string $phoneNumber,
