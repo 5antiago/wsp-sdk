@@ -4,8 +4,9 @@ namespace Santiago\WhatsappSdk\Messages\Outcoming;
 
 use Santiago\WhatsappSdk\Interactions\BaseInteraction;
 use Santiago\WhatsappSdk\Interfaces\Jsonable;
+use Santiago\WhatsappSdk\Objects\Message;
 
-class InteractiveMessage implements Jsonable
+class InteractiveMessage extends Message implements Jsonable
 {
     public function __construct(
         private string $phoneNumber,
@@ -15,14 +16,12 @@ class InteractiveMessage implements Jsonable
         private BaseInteraction $action,
         private ?string $replyingTo = null
     ) {
+        parent::__construct($phoneNumber, 'interactive');
     }
     public function toJson(): string
     {
-        $data = [
-            'messaging_product' => 'whatsapp',
-            "recipient_type" => "individual",
-            'to' => $this->phoneNumber,
-            'type' => 'interactive',
+        $data = parent::toArray();
+        $data += [
             'interactive' => [
                 'type' => $this->action->gettype(),
                 'header' => [

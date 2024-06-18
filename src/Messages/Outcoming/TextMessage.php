@@ -2,32 +2,27 @@
 
 namespace Santiago\WhatsappSdk\Messages\Outcoming;
 
-use Santiago\WhatsappSdk\Interfaces\Jsonable;
+use Santiago\WhatsappSdk\Objects\Message;
 
-class TextMessage implements Jsonable
+class TextMessage extends Message
 {
+    private string $body;
+    private bool $previewUrl;
     public function __construct(
-        private string $phoneNumber,
-        private string $text,
-        private ?string $replyingTo = null,
-        private ?string $previewUrl = null
+        string $phoneNumber,
+        string $body,
+        ?bool $previewUrl = null,
+        ?string $replyingTo = null
     ) {
+        parent::__construct($phoneNumber, 'text', $replyingTo);
+        $this->body = $body;
+        $this->previewUrl = $previewUrl ?: false;
     }
-    public function toJson(): string
+    public function toArray(): array
     {
-        $data = [
-            'messaging_product' => 'whatsapp',
-            'recipient_type' => 'individual',
-            'to' => $this->phoneNumber,
-            'type' => 'text',
-            'text' => [
-                'preview_url' => $this->previewUrl ?: false,
-                'body' => $this->text
-            ]
-        ];
-        if (isset($this->replyingTo)) {
-            $data = $data + ['context' => ['message_id' => $this->replyingTo]];
-        }
-        return json_encode($data);
+        return parent::toArray() + ['text' => [
+            'preview_url' => $this->previewUrl,
+            'body' => $this->body
+        ]];
     }
 }
